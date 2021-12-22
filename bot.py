@@ -32,31 +32,21 @@ async def sauce(ctx, url: typing.Optional[str]):
     try:
         if url:
             results = await saucenao.from_url(url)
-        else:
-            results = await saucenao.from_url(ctx.message.attachments[0].url)
+        elif not url:
+            if ctx.message.attachments:
+                results = await saucenao.from_url(ctx.message.attachments[0].url)
 
         if results:
             try:
-                try:
-                    await ctx.reply(
-                        embed=results_embed(
-                            database=f"[{results[0].index}]({results[0].url})",
-                            similarity=f"{results[0].similarity}%",
-                            author=f"[{results[0].author_name}]({results[0].author_url})",
-                            title=results[0].title,
-                            thumbnail=results[0].thumbnail
-                        )
+                await ctx.reply(
+                    embed=results_embed(
+                        database=f"[{results[0].index}]({results[0].url})",
+                        similarity=f"{results[0].similarity}%",
+                        author=f"[{results[0].author_name}]({results[0].author_url})",
+                        title=results[0].title,
+                        thumbnail=results[0].thumbnail
                     )
-                except IndexError:
-                    await ctx.reply(
-                        embed=error_embed(
-                            title = "Failed to find source!",
-                            description = """
-                            I can't find the source of the image, gif, or video
-                            Please use other ways of finding the source either by reverse image searching or using other source locators like [trace.moe](https://trace.moe) or by creating a post in [r/SauceSharingCommunity](https://www.reddit.com/r/SauceSharingCommunity/).
-                            """
-                        )
-                    )
+                )
             except Exception as e:
                 await ctx.reply(
                     embed=error_embed(
@@ -68,6 +58,17 @@ async def sauce(ctx, url: typing.Optional[str]):
                         """
                     )
                 )
+        else:
+            await ctx.reply(
+                embed=error_embed(
+                    title = "No results!",
+                    description = f"""
+                    I can't find the source of the image, gif, or video. Maybe the results had low similarity percentage?
+
+                    Please use other ways of finding the source either by reverse image searching or using other source locators like [trace.moe](https://trace.moe) or by creating a post in [r/SauceSharingCommunity](https://www.reddit.com/r/SauceSharingCommunity/).
+                    """
+                )
+            )
     except Exception as e:
         await ctx.reply(
             embed=error_embed(
