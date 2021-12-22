@@ -26,7 +26,7 @@ saucenao:
   api_key: ""
 ```
 
-**Step 4:** Run the `bot.py` file and you are good to go!
+**Step 4:** Run `bot.py` file and you are good to go!
 
 ## Built with
 This discord bot relies on the following:
