@@ -1,4 +1,4 @@
-<img width="150" height="150" src="https://cdn.upload.systems/uploads/tlCIatyN.jpg">
+<img src="https://cdn.upload.systems/uploads/3JNpzcb6.png">
 
 # SauceBot
 A Discord bot that utilizes SauceNao API to find the source of anime image, gif, or video.
@@ -30,7 +30,6 @@ saucenao:
 
 ## Built with
 This discord bot relies on the following:
-
 * [Python 3.10](https://www.python.org/)
 * [PyCord](https://github.com/Pycord-Development/pycord)
 * [ruamel.yaml](https://pypi.org/project/ruamel.yaml/)
