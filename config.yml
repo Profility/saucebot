@@ -1,0 +1,9 @@
+discord:
+  prefix: "s!"
+  token: ""
+  status: "supplying sauces!"
+
+saucenao:
+  api_key: ""
+  results_limit: 6
+  min_similarity: 50.0
