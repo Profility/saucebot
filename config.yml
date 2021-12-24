@@ -1,7 +1,7 @@
 discord:
   prefix: "s!"
   token: ""
-  status: "supplying sauces!"
+  status: "s!help"
 
 saucenao:
   api_key: ""
