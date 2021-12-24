@@ -12,7 +12,7 @@ press the API button and copy the key.
 
 ## Install
 
-**Step 1:** Clone the repository by using git.
+**Step 1:** Clone the repository by using `git clone https://github.com/Profility/saucebot.git`
 
 **Step 2:** Install all the pre-requisites by using `pip install -r requirements.txt`
 
