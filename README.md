@@ -1,4 +1,4 @@
-<img src="https://cdn.upload.systems/uploads/3JNpzcb6.png">
+<img src="https://cdn.upload.systems/uploads/yOU6zY2U.png">
 
 # SauceBot
 A Discord bot that utilizes SauceNao API to find the source of anime image, gif, or video.
