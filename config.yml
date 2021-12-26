@@ -1,8 +1,8 @@
 discord:
-  aliases: ['source', 'saucenao', 'get', 'search', 'sause', 'nao']
-  prefix: "s!"
   token: ""
+  prefix: "s!"
   status: "s!help"
+  aliases: ['source', 'saucenao', 'get', 'search', 'sause', 'nao']
 
 saucenao:
   api_key: ""
