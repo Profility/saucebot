@@ -1,4 +1,5 @@
 discord:
+  aliases: ['source', 'saucenao', 'get', 'search', 'sause', 'nao']
   prefix: "s!"
   token: ""
   status: "s!help"
