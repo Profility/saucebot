@@ -31,6 +31,6 @@ saucenao:
 ## Built with
 This discord bot relies on the following:
 * [Python 3.10](https://www.python.org/)
-* [PyCord](https://github.com/Pycord-Development/pycord)
+* [pycord](https://github.com/Pycord-Development/pycord)
 * [ruamel.yaml](https://pypi.org/project/ruamel.yaml/)
-* [PySauceNao](pysaucenao)
+* [pysaucenao](pysaucenao)
