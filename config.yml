@@ -1,0 +1,10 @@
+discord:
+  token: BOT_TOKEN
+  prefix: "s!"
+  status: "s!help"
+  aliases: ['source', 'saucenao', 'get', 'search', 'sause', 'nao']
+
+saucenao:
+  api_key: SAUCENAO_APIKEY
+  results_limit: 6
+  min_similarity: 50.0
