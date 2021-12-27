@@ -16,7 +16,7 @@ press the API button and copy the key.
 
 **Step 2:** Install all the pre-requisites by using `pip install -r requirements.txt`
 
-**Step 3:** Fill out the following inside the `config.yml` file
+**Step 3:** Fill out the following inside the `config.default.yml` file. Once finished, rename it to `config.yml`
 
 ```yml
 discord:
