@@ -38,7 +38,6 @@ async def help(ctx):
 
 @bot.command(name='sauce', aliases=config['discord']['aliases'])
 async def sauce(ctx, url: typing.Optional[str]):
-    results = None
     try:
         if url:
             results = await saucenao.from_url(url)
@@ -50,42 +49,31 @@ async def sauce(ctx, url: typing.Optional[str]):
                     embed=embeds.help_embed()
                 )
                 return
-
-        if not results == None:
-            try:
-                await ctx.reply(
-                    embed=embeds.results_embed(
-                        database=f"[{results[0].index}]({results[0].url})",
-                        similarity=f"{results[0].similarity}%",
-                        author=f"[{results[0].author_name}]({results[0].author_url})",
-                        title=results[0].title,
-                        thumbnail=results[0].thumbnail
-                    )
-                )
-            except Exception as e:
-                await ctx.reply(
-                    embed=embeds.error_embed(
-                        title = "Encountered an error!",
-                        description = f"""
-                        Something went wrong whilst trying to reply with the results.\n\n**Error:** {e}
-                        """
-                    )
-                )
-        else:
-            await ctx.reply(
-                embed=embeds.error_embed(
-                    title = "No results!",
-                    description = f"""
-                    I can't find the source of the image, gif, or video. Maybe the results had low similarity percentage?\n\nPlease use other ways of finding the source either by reverse image searching or using source locators like [SauceNao](https://saucenao.com/) and [trace.moe](https://trace.moe) or by creating a post in [r/SauceSharingCommunity](https://www.reddit.com/r/SauceSharingCommunity/).
-                    """
-                )
-            )
     except Exception as e:
         await ctx.reply(
             embed=embeds.error_embed(
                 title = "API Error!",
                 description = f"""
                 Failed to get results from the image, gif, or video.\n\n**Error:** {e}
+                """
+            )
+        )
+    try:
+        await ctx.reply(
+            embed=embeds.results_embed(
+                database=f"[{results[0].index}]({results[0].url})",
+                similarity=f"{results[0].similarity}%",
+                author=f"[{results[0].author_name}]({results[0].author_url})",
+                title=results[0].title,
+                thumbnail=results[0].thumbnail
+            )
+        )
+    except IndexError:
+        await ctx.reply(
+            embed=embeds.error_embed(
+                title = "No Results!",
+                description = f"""
+                I can't find the source of the image, gif, or video. Maybe the results had low similarity percentage?\n\nPlease use other ways of finding the source either by reverse image searching or using source locators like [SauceNao](https://saucenao.com/) and [trace.moe](https://trace.moe) or by creating a post in [r/SauceSharingCommunity](https://www.reddit.com/r/SauceSharingCommunity/).
                 """
             )
         )
