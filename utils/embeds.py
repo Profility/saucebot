@@ -1,13 +1,14 @@
 import discord
 import typing
+from datetime import datetime
 from utils.config import config
 from discord.colour import Color
 
-def results_embed(database: typing.Optional[str], similarity: typing.Optional[float], author: typing.Optional[str], title: typing.Optional[str], thumbnail: typing.Optional[str]):
+def results_embed(database: typing.Optional[str], similarity: typing.Optional[float], author: typing.Optional[str], title: typing.Optional[str], thumbnail: typing.Optional[str], timestamp: typing.Optional[bool]):
     resultsmessage = discord.Embed(
         color=Color.green(),
         title="✅ Sauce Found!"
-    )
+    ).timestamp = datetime.now()
     if database:
         resultsmessage.add_field(
             name="Database:",
@@ -41,20 +42,26 @@ def results_embed(database: typing.Optional[str], similarity: typing.Optional[fl
         
     return resultsmessage
 
-def error_embed(title: str, description: str):
-    return discord.Embed(
+def error_embed(title: str, description: str, timestamp: typing.Optional[bool]):
+    errormessage = discord.Embed(
         color = Color.red(),
         title = f"❌   {title}",
         description = description
-    )
+    ).timestamp = datetime.now()
+    
+    return errormessage
 
 def help_embed():
-    return discord.Embed(
+    helpmessage = discord.Embed(
         color = Color.lighter_gray(),
         title="Instructions on how to use SauceBot!",
         description=f"""
-        Using SauceBot is very easy and straightforward, you only need to say `s!sauce` along with the URL or the file of the anime image, gif, video.\n\nThere are aliases to this command, like **{', '.join(config['discord']['aliases'])}**\n\nPlease do keep in mind that results are not always accurate. To check their accuracy, please refer to the similarity percentage.\n\n**Video Demonstration:**
+        Using SauceBot is very easy and straightforward, you only need to say `{config['discord']['prefix']}saucenao` along with the URL or the file of the anime image, gif, video.\n\nThere are aliases to this command, like **{', '.join(config['discord']['aliases'])}**\n\nPlease do keep in mind that results are not always accurate. To check their accuracy, please refer to the similarity percentage.\n\n**Video Demonstration:**
         """
     ).set_image(
         url = "https://cdn.upload.systems/uploads/kXz4TvKf.gif"
     )
+    
+    helpmessage.timestamp = datetime.now()
+    
+    return helpmessage
