@@ -8,4 +8,3 @@ saucenao:
   aliases: ['source', 'sauce', 'sause', 'nao']
   results_limit: 6
   min_similarity: 50.0
-  timeout: 300.0
