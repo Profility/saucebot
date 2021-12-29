@@ -40,6 +40,7 @@ async def help(ctx):
         embed = embeds.help_embed()
     )
 
+@commands.bot_has_permissions(manage_messages=True, add_reactions=True)
 @bot.command(name='saucenao', aliases=config['saucenao']['aliases'])
 async def saucenao(ctx, url: typing.Optional[str]):
     leftButton = "\u2B05"
@@ -119,6 +120,18 @@ async def saucenao(ctx, url: typing.Optional[str]):
                 I can't find the source of the image, gif, or video. Maybe the results had low similarity percentage?\n\nPlease use other ways of finding the source either by reverse image searching or using source locators like [SauceNao](https://saucenao.com/) and [trace.moe](https://trace.moe) or by creating a post in [r/SauceSharingCommunity](https://www.reddit.com/r/SauceSharingCommunity/).
                 """
             ), delete_after=30.0
+        )
+        
+@saucenao.error
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.BotMissingPermissions):
+        await ctx.reply(
+            embed = embeds.error_embed(
+                title = "Missing Permissions",
+                description=f"""
+                SauceBot requires **Manage Messages** and **Add Reactions** permissions for it to function as intended.
+                """
+            )
         )
 
 bot.run(config['discord']['token'])
