@@ -1,4 +1,5 @@
 git+https://github.com/Pycord-Development/pycord.git
 typing
+typing-extensions
 ruamel.yaml
 pysaucenao
