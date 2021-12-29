@@ -4,11 +4,13 @@ from datetime import datetime
 from utils.config import config
 from discord.colour import Color
 
-def results_embed(database: typing.Optional[str], similarity: typing.Optional[float], author: typing.Optional[str], title: typing.Optional[str], thumbnail: typing.Optional[str], timestamp: typing.Optional[bool]):
+def results_embed(database: typing.Optional[str], similarity: typing.Optional[float], author: typing.Optional[str], title: typing.Optional[str], thumbnail: typing.Optional[str]):
     resultsmessage = discord.Embed(
         color=Color.green(),
         title="✅ Sauce Found!"
-    ).timestamp = datetime.now()
+    )
+    
+    resultsmessage.timestamp = datetime.now()
     if database:
         resultsmessage.add_field(
             name="Database:",
@@ -42,12 +44,14 @@ def results_embed(database: typing.Optional[str], similarity: typing.Optional[fl
         
     return resultsmessage
 
-def error_embed(title: str, description: str, timestamp: typing.Optional[bool]):
+def error_embed(title: str, description: str):
     errormessage = discord.Embed(
         color = Color.red(),
         title = f"❌   {title}",
         description = description
-    ).timestamp = datetime.now()
+    )
+    
+    errormessage.timestamp = datetime.now()
     
     return errormessage
 
