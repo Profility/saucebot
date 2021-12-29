@@ -92,14 +92,14 @@ async def saucenao(ctx, url: typing.Optional[str]):
                 )
             )
             
-        resultsEmbed = await ctx.reply(embed=resultsPages[currentPage - 1].set_footer(text=f"Page {currentPage} of {len(resultsPages)}"), delete_after=config['saucenao']['timeout'])
+        resultsEmbed = await ctx.reply(embed=resultsPages[currentPage - 1].set_footer(text=f"Page {currentPage} of {len(resultsPages)}"))
         
         if len(results) > 1:
             for button in buttons:
                 await resultsEmbed.add_reaction(button)
             
             while True:
-                reaction, user = await ctx.bot.wait_for("reaction_add", check=checks, timeout=config['saucenao']['timeout'])
+                reaction, user = await ctx.bot.wait_for("reaction_add", check=checks)
                 
                 if reaction.emoji == leftButton:   
                     await resultsEmbed.remove_reaction(leftButton, user)
