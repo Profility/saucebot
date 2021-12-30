@@ -4,7 +4,7 @@ import logging
 from utils import embeds
 from utils.config import config
 from pysaucenao import SauceNao
-from discord.ext import commands
+from discord.ext import commands, pages
 from urllib.request import getproxies
 from pysaucenao.errors import SauceNaoException
 
@@ -40,14 +40,8 @@ async def help(ctx):
         embed = embeds.help_embed()
     )
 
-@commands.bot_has_permissions(manage_messages=True, add_reactions=True)
 @bot.command(name='saucenao', aliases=config['saucenao']['aliases'])
 async def saucenao(ctx, url: typing.Optional[str]):
-    leftButton = "\u2B05"
-    rightButton = "\u27A1"
-    buttons = (leftButton, rightButton)
-    
-    currentPage = 1
     resultsPages = []
     results = None
     try:
@@ -61,77 +55,63 @@ async def saucenao(ctx, url: typing.Optional[str]):
                     embed=embeds.help_embed()
                 )
                 return
-
+        try:
+            if results == None: raise IndexError
+            for result in results:
+                resultsPages.append(
+                    embeds.results_embed(
+                        database=f"[{result.index}]({result.url})",
+                        similarity=f"{result.similarity}%",
+                        author=f"[{result.author_name}]({result.author_url})",
+                        title=result.title,
+                        thumbnail=result.thumbnail,
+                    )
+                )
+            if len(results) > 1:
+                paginator = pages.Paginator(
+                    pages=resultsPages,
+                    show_disabled=True,
+                    show_indicator=True,
+                    author_check=True
+                )
+                paginator.customize_button(
+                    button_name="prev",
+                    button_emoji="⬅️",
+                )
+                paginator.customize_button(
+                    button_name="next",
+                    button_emoji="➡️",
+                )
+                paginator.customize_button(
+                    button_name="first",
+                    button_emoji="⏪",
+                )
+                paginator.customize_button(
+                    button_name="last",
+                    button_emoji="⏩",
+                )
+                await paginator.send(ctx)
+            else:
+                await ctx.send(
+                    embed=resultsPages[0]
+                )
+        except IndexError:
+            await ctx.reply(
+                embed=embeds.error_embed(
+                    title = "No Results!",
+                    description = f"""
+                    I can't find the source of the image or gif. Maybe the results had low similarity percentage?\n\nPlease use other ways of finding the source either by reverse image searching or using source locators like [SauceNao](https://saucenao.com/) and [trace.moe](https://trace.moe) or by creating a post in [r/SauceSharingCommunity](https://www.reddit.com/r/SauceSharingCommunity/).
+                    """
+                ), delete_after=30.0
+            )
     except SauceNaoException as e:
         await ctx.reply(
             embed=embeds.error_embed(
                 title = "API Error!",
                 description = f"""
-                Failed to get results from the image, gif, or video.\n\n**Error:** {e}
+                Failed to get results from the image or gif.\n\n**Error:** {e}
                 """
             ), delete_after=30.0
-        )
-        return
-    
-    try:
-        if results == None: raise IndexError
-        def checks(reaction, user):
-            if user != ctx.message.author:
-                return False
-            if str(reaction.emoji) not in buttons:
-                return False
-            return True
-        
-        for result in results:
-            resultsPages.append(
-                embeds.results_embed(
-                    database=f"[{result.index}]({result.url})",
-                    similarity=f"{result.similarity}%",
-                    author=f"[{result.author_name}]({result.author_url})",
-                    title=result.title,
-                    thumbnail=result.thumbnail,
-                )
-            )
-            
-        resultsEmbed = await ctx.reply(embed=resultsPages[currentPage - 1].set_footer(text=f"Page {currentPage} of {len(resultsPages)}"))
-        
-        if len(results) > 1:
-            for button in buttons:
-                await resultsEmbed.add_reaction(button)
-            
-            while True:
-                reaction, user = await ctx.bot.wait_for("reaction_add", check=checks)
-                
-                if reaction.emoji == leftButton:   
-                    await resultsEmbed.remove_reaction(leftButton, user)
-                    if currentPage != 1:
-                        currentPage = currentPage - 1
-                        await resultsEmbed.edit(embed=resultsPages[currentPage - 1].set_footer(text=f"Page {currentPage} of {len(resultsPages)}"))
-                if reaction.emoji == rightButton:    
-                    await resultsEmbed.remove_reaction(rightButton, user)
-                    if currentPage != len(resultsPages):
-                        currentPage = currentPage + 1
-                        await resultsEmbed.edit(embed=resultsPages[currentPage - 1].set_footer(text=f"Page {currentPage} of {len(resultsPages)}"))
-    except IndexError:
-        await ctx.reply(
-            embed=embeds.error_embed(
-                title = "No Results!",
-                description = f"""
-                I can't find the source of the image, gif, or video. Maybe the results had low similarity percentage?\n\nPlease use other ways of finding the source either by reverse image searching or using source locators like [SauceNao](https://saucenao.com/) and [trace.moe](https://trace.moe) or by creating a post in [r/SauceSharingCommunity](https://www.reddit.com/r/SauceSharingCommunity/).
-                """
-            ), delete_after=30.0
-        )
-        
-@saucenao.error
-async def on_command_error(ctx, error):
-    if isinstance(error, commands.BotMissingPermissions):
-        await ctx.reply(
-            embed = embeds.error_embed(
-                title = "Missing Permissions",
-                description=f"""
-                SauceBot requires **Manage Messages** and **Add Reactions** permissions for it to function as intended.
-                """
-            )
         )
 
 bot.run(config['discord']['token'])
