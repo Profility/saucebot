@@ -70,7 +70,7 @@ async def saucenao(ctx, url: typing.Optional[str]):
             if len(results) > 1:
                 paginator = pages.Paginator(
                     pages=resultsPages,
-                    show_disabled=True,
+                    show_disabled=False,
                     show_indicator=True,
                     author_check=True
                 )
