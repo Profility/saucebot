@@ -100,7 +100,7 @@ async def saucenao(ctx, url: typing.Optional[str]):
                 embed=embeds.error_embed(
                     title = "No Results!",
                     description = f"""
-                    I can't find the source of the image or gif. Maybe the results had low similarity percentage?\n\nPlease use other ways of finding the source either by reverse image searching or using source locators like [SauceNao](https://saucenao.com/) and [trace.moe](https://trace.moe) or by creating a post in [r/SauceSharingCommunity](https://www.reddit.com/r/SauceSharingCommunity/).
+                    I can't find the source of the image or gif. Maybe the results had low similarity percentage?\n\nPlease use other ways of finding the source either by reverse image searching or using source locator websites like [SauceNao](https://saucenao.com/) and [trace.moe](https://trace.moe) or by creating a post in [r/SauceSharingCommunity](https://www.reddit.com/r/SauceSharingCommunity/).
                     """
                 ), delete_after=30.0
             )
