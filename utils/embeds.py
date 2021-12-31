@@ -60,7 +60,7 @@ def help_embed():
         color = Color.lighter_gray(),
         title="Instructions on how to use SauceBot!",
         description=f"""
-        Using SauceBot is very easy and straightforward, you only need to say `{config['discord']['prefix']}saucenao` along with the URL or the file of the anime image or gif.\n\nThere are aliases to this command, like **{', '.join(config['saucenao']['aliases'])}**\n\nPlease do keep in mind that results are not always accurate. To check their accuracy, please refer to the similarity percentage.\n\nWhen sending a request, you must use direct image URL. The image must not have unnecessary borders/information, this increases the chances of getting accurate results.\n\n**Video Demonstration:**
+        Using SauceBot is very easy and straightforward, you only need to say `{config['discord']['prefix']}saucenao` along with the URL or the file of the anime image or gif.\n\nThere are aliases to this command, like **{', '.join(config['saucenao']['aliases'])}**\n\nPlease do keep in mind that results are not always accurate. To check their accuracy, please refer to the similarity percentage and thumbnail picture.\n\nWhen sending a request, you must use direct image URL. The image must not have unnecessary borders/information, this increases the chances of getting accurate results. SauceBot only picks results with the similarity of {config['saucenao', 'min_similarity']} and above.\n\n**Video Demonstration:**
         """
     ).set_image(
         url = "https://cdn.upload.systems/uploads/kXz4TvKf.gif"
