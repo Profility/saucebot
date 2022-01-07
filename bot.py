@@ -1,11 +1,12 @@
+import json
 import typing
 import discord
 import logging
 from utils import embeds
 from utils.config import config
 from pysaucenao import SauceNao
-from discord.ext import commands, pages
 from urllib.request import getproxies
+from discord.ext import commands, pages
 from pysaucenao.errors import SauceNaoException
 
 log = logging.getLogger()
@@ -15,32 +16,32 @@ logging.basicConfig(
 )
 
 bot = commands.Bot(
-    command_prefix=config['discord']['prefix'],
+    command_prefix=config.get("discord", "prefix"),
     help_command=None
 )
 
-@bot.event
-async def on_ready():
-    log.info(f'Logged in: {bot.user} ({bot.user.id})')
-    await bot.change_presence(activity=discord.Game(config['discord']['status']))
-    
 try:
     sauce = SauceNao(
-        api_key=config['saucenao']['api_key'],
-        results_limit=config['saucenao']['results_limit'],
-        min_similarity=config['saucenao']['min_similarity'],
+        api_key=config.get("saucenao", "api_key"),
+        results_limit=config.getint("saucenao", "results_limit"),
+        min_similarity=config.getfloat("saucenao", "min_similarity"),
         proxy=getproxies()
     )
 except Exception as e:
     log.error(f"Failed to initialize SauceNao object: {e}")
+    
+@bot.event
+async def on_ready():
+    log.info(f'Logged in: {bot.user} ({bot.user.id})')
+    await bot.change_presence(activity=discord.Game(config.get("discord", "status")))
 
 @bot.command(name="help")
 async def help(ctx):
     await ctx.reply(
         embed = embeds.help_embed()
     )
-
-@bot.command(name='saucenao', aliases=config['saucenao']['aliases'])
+    
+@bot.command(name='saucenao', aliases=json.loads(config.get("saucenao", "aliases")))
 async def saucenao(ctx, url: typing.Optional[str]):
     resultsPages = []
     results = None
@@ -65,7 +66,7 @@ async def saucenao(ctx, url: typing.Optional[str]):
                         author=f"[{result.author_name}]({result.author_url})",
                         title=result.title,
                         thumbnail=result.thumbnail,
-                    )
+                    ).set_footer(text=f"{results.long_remaining}/{results.long_limit}")
                 )
             if len(results) > 1:
                 paginator = pages.Paginator(
@@ -102,7 +103,7 @@ async def saucenao(ctx, url: typing.Optional[str]):
                     description = f"""
                     I can't find the source of the image or gif. Maybe the results had low similarity percentage?\n\nPlease use other ways of finding the source either by reverse image searching or using source locator websites like [SauceNao](https://saucenao.com/) and [trace.moe](https://trace.moe) or by creating a post in [r/SauceSharingCommunity](https://www.reddit.com/r/SauceSharingCommunity/).
                     """
-                ), delete_after=30.0
+                ).set_footer(text=f"{results.long_remaining}/{results.long_limit}")
             )
     except SauceNaoException as e:
         await ctx.reply(
@@ -111,7 +112,7 @@ async def saucenao(ctx, url: typing.Optional[str]):
                 description = f"""
                 Failed to get results from the image or gif.\n\n**Error:** {e}
                 """
-            ), delete_after=30.0
+            ).set_footer(text=f"{results.long_remaining}/{results.long_limit}")
         )
-
-bot.run(config['discord']['token'])
+        
+bot.run(config.get("discord", "token"))
