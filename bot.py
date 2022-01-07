@@ -37,7 +37,7 @@ async def on_ready():
 
 @bot.command(name="help")
 async def help(ctx):
-    await ctx.reply(
+    await ctx.send(
         embed = embeds.help_embed()
     )
     
@@ -52,7 +52,7 @@ async def saucenao(ctx, url: typing.Optional[str]):
             if ctx.message.attachments:
                 results = await sauce.from_url(ctx.message.attachments[0].url)
             else:
-                await ctx.reply(
+                await ctx.send(
                     embed=embeds.help_embed()
                 )
                 return
@@ -97,7 +97,7 @@ async def saucenao(ctx, url: typing.Optional[str]):
                     embed=resultsPages[0]
                 )
         except IndexError:
-            await ctx.reply(
+            await ctx.send(
                 embed=embeds.error_embed(
                     title = "No Results!",
                     description = f"""
@@ -106,7 +106,7 @@ async def saucenao(ctx, url: typing.Optional[str]):
                 ).set_footer(text=f"{results.long_remaining}/{results.long_limit}")
             )
     except SauceNaoException as e:
-        await ctx.reply(
+        await ctx.send(
             embed=embeds.error_embed(
                 title = "API Error!",
                 description = f"""
