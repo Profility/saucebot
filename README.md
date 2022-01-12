@@ -16,7 +16,7 @@ press the API button and copy the key.
 
 **Step 2:** Install all the pre-requisites by using `pip install -r requirements.txt`
 
-**Step 3:** Fill out the following inside the `config.ini` file.
+**Step 3:** Fill out the following inside the `config-example.ini` file and rename it to `config.ini` once done.
 
 ```ini
 [discord]
