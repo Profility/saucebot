@@ -18,12 +18,12 @@ press the API button and copy the key.
 
 **Step 3:** Fill out the following inside the `config.ini` file.
 
-```yml
-discord:
-  token: ""
+```ini
+[discord]
+token: BOT_TOKEN
 
-saucenao:
-  api_key: ""
+[saucenao]
+api_key: SAUCENAO_APIKEY
 ```
 
 **Step 4:** Run `bot.py` file and you are good to go!
