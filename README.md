@@ -16,7 +16,7 @@ press the API button and copy the key.
 
 **Step 2:** Install all the pre-requisites by using `pip install -r requirements.txt`
 
-**Step 3:** Fill out the following inside the `config.yml` file.
+**Step 3:** Fill out the following inside the `config.ini` file.
 
 ```yml
 discord:
@@ -32,5 +32,4 @@ saucenao:
 This discord bot relies on the following:
 * [Python 3.10](https://www.python.org/)
 * [pycord](https://github.com/Pycord-Development/pycord)
-* [ruamel.yaml](https://pypi.org/project/ruamel.yaml/)
 * [pysaucenao](pysaucenao)
