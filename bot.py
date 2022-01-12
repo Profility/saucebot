@@ -5,6 +5,7 @@ import logging
 from utils import embeds
 from utils.config import config
 from pysaucenao import SauceNao
+from discord.errors import NotFound
 from urllib.request import getproxies
 from discord.ext import commands, pages
 from pysaucenao.errors import SauceNaoException
@@ -16,8 +17,9 @@ logging.basicConfig(
 )
 
 bot = commands.Bot(
-    command_prefix=config.get("discord", "prefix"),
-    help_command=None
+    command_prefix=json.loads(config.get("discord", "prefix")),
+    help_command=None,
+    case_insensitive=True
 )
 
 try:
@@ -42,12 +44,33 @@ async def help(ctx):
     )
     
 @bot.command(name='saucenao', aliases=json.loads(config.get("saucenao", "aliases")))
-async def saucenao(ctx, url: typing.Optional[str]):
+async def saucenao(ctx, src: typing.Optional[str]):
     resultsPages = []
     results = None
     try:
-        if url:
-            results = await sauce.from_url(url)
+        if src:
+            if src.startswith("<@"):
+                try:
+                    member = await bot.fetch_user(src.strip("<@!>"))
+                except NotFound:
+                    await ctx.send(
+                        embed=embeds.error_embed(
+                            title = "Not Found!",
+                            description = "The user mentioned does not exist."
+                        )
+                    )
+                    return
+                results = await sauce.from_url(member.avatar.url)
+            elif src.startswith("https://") or src.startswith("http://"):
+                results = await sauce.from_url(src)
+            else:
+                await ctx.send(
+                    embed=embeds.error_embed(
+                        title = "Not a URL!",
+                        description = "The argument given is not a URL, please make sure that it starts with either **https://** or **https://** for it to work."
+                    )
+                )
+                return
         else:
             if ctx.message.attachments:
                 results = await sauce.from_url(ctx.message.attachments[0].url)
@@ -114,5 +137,5 @@ async def saucenao(ctx, url: typing.Optional[str]):
                 """
             ).set_footer(text=f"{results.long_remaining}/{results.long_limit}")
         )
-        
+
 bot.run(config.get("discord", "token"))
