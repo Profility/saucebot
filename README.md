@@ -1,4 +1,4 @@
-<img src="https://cdn.upload.systems/uploads/yOU6zY2U.png">
+<img src="https://cdn.upload.systems/uploads/2LW1xcE7.png">
 
 # SauceBot
 A Discord bot that utilizes SauceNao API to find the source of anime image.
@@ -7,8 +7,7 @@ A Discord bot that utilizes SauceNao API to find the source of anime image.
 
 You will need to have a discord bot first before cloning this repository, you can create one [here](https://discord.com/developers/applications) and copy the token. SauceBot will need the `bot` and `applications.commands` scopes selected for it to function as intended.
 
-You will also need to have an SauceNao API Key, you can get one [here](https://saucenao.com/user.php), create an account and press the "Account" tab in the bottom,
-press the API button and copy the key.
+Although it's not really necessary, you can get a SauceNao API key in order to perform lots of queries, you can get one [here](https://saucenao.com/user.php), create an account and press the "Account" tab in the bottom, press the API button and copy the key. 
 
 ## Install
 
@@ -20,16 +19,15 @@ press the API button and copy the key.
 
 ```ini
 [discord]
-token: BOT_TOKEN
+token: BOT_TOKEN ; You will put your discord bot token here.
 
 [saucenao]
-api_key: SAUCENAO_APIKEY
+api_key: SAUCENAO_APIKEY ; You will put your SauceNao API Key here, or you can leave it empty.
 ```
 
 **Step 4:** Run `bot.py` file and you are good to go!
 
 ## Built with
 This discord bot relies on the following:
-* [Python 3.10](https://www.python.org/)
 * [pycord](https://github.com/Pycord-Development/pycord)
 * [pysaucenao](pysaucenao)
