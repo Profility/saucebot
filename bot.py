@@ -9,6 +9,7 @@ from discord.errors import NotFound
 from urllib.request import getproxies
 from discord.ext import commands, pages
 from pysaucenao.errors import SauceNaoException
+from discord.ext.pages.pagination import PaginatorButton
 
 log = logging.getLogger()
 logging.basicConfig(
@@ -98,21 +99,33 @@ async def saucenao(ctx, src: typing.Optional[str]):
                     show_indicator=True,
                     author_check=True
                 )
-                paginator.customize_button(
-                    button_name="prev",
-                    button_emoji="⬅️",
+                paginator.add_button(
+                    PaginatorButton(
+                        button_type="prev",
+                        emoji="⬅️",
+                        style=discord.ButtonStyle.grey
+                    )
                 )
-                paginator.customize_button(
-                    button_name="next",
-                    button_emoji="➡️",
+                paginator.add_button(
+                    PaginatorButton(
+                        button_type="next",
+                        emoji="➡️",
+                        style=discord.ButtonStyle.grey
+                    )
                 )
-                paginator.customize_button(
-                    button_name="first",
-                    button_emoji="⏪",
+                paginator.add_button(
+                    PaginatorButton(
+                        button_type="first",
+                        emoji="⏪",
+                        style=discord.ButtonStyle.grey
+                    )
                 )
-                paginator.customize_button(
-                    button_name="last",
-                    button_emoji="⏩",
+                paginator.add_button(
+                    PaginatorButton(
+                        button_type="last",
+                        emoji="⏩",
+                        style=discord.ButtonStyle.grey
+                    )
                 )
                 await paginator.send(ctx)
             else:
