@@ -68,7 +68,7 @@ async def saucenao(ctx, src: typing.Optional[str]):
                 await ctx.send(
                     embed=embeds.error_embed(
                         title = "Not a URL!",
-                        description = "The argument given is not a URL, please make sure that it starts with either **https://** or **https://** for it to work."
+                        description = "The argument given is not a URL, please make sure that it starts with either **https://** or **https://** for it to work properly."
                     )
                 )
                 return
@@ -137,7 +137,7 @@ async def saucenao(ctx, src: typing.Optional[str]):
                 embed=embeds.error_embed(
                     title = "No Results!",
                     description = f"""
-                    I can't find the source of the image or gif. Maybe the results had low similarity percentage?\n\nPlease use other ways of finding the source either by reverse image searching or using source locator websites like [SauceNao](https://saucenao.com/) and [trace.moe](https://trace.moe) or by creating a post in [r/SauceSharingCommunity](https://www.reddit.com/r/SauceSharingCommunity/).
+                    I can't find the source of the image. Maybe the results had low similarity percentage?\n\nPlease use other ways of finding the source either by reverse image searching or using source locator websites like [SauceNao](https://saucenao.com/) and [trace.moe](https://trace.moe) or by creating a post in [r/SauceSharingCommunity](https://www.reddit.com/r/SauceSharingCommunity/).
                     """
                 ).set_footer(text=f"{results.long_remaining}/{results.long_limit}")
             )
@@ -146,7 +146,7 @@ async def saucenao(ctx, src: typing.Optional[str]):
             embed=embeds.error_embed(
                 title = "API Error!",
                 description = f"""
-                Failed to get results from the image or gif.\n\n**Error:** {e}
+                Failed to get results from the image.\n\n**Error:** {e}
                 """
             )
         )
