@@ -148,7 +148,7 @@ async def saucenao(ctx, src: typing.Optional[str]):
                 description = f"""
                 Failed to get results from the image or gif.\n\n**Error:** {e}
                 """
-            ).set_footer(text=f"{results.long_remaining}/{results.long_limit}")
+            )
         )
 
 bot.run(config.get("discord", "token"))
