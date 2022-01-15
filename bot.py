@@ -48,6 +48,7 @@ async def help(ctx):
 async def saucenao(ctx, src: typing.Optional[str]):
     resultsPages = []
     results = None
+    
     try:
         if src:
             if src.startswith("<@"):
@@ -62,13 +63,25 @@ async def saucenao(ctx, src: typing.Optional[str]):
                     )
                     return
                 results = await sauce.from_url(member.avatar.url)
+            elif src.isdigit():
+                try:
+                    member = await bot.fetch_user(src)
+                except NotFound:
+                    await ctx.send(
+                        embed=embeds.error_embed(
+                            title = "Not Found!",
+                            description = "The user ID given does not belong to any user."
+                        )
+                    )
+                    return
+                results = await sauce.from_url(member.avatar.url)
             elif src.startswith("https://") or src.startswith("http://"):
                 results = await sauce.from_url(src)
             else:
                 await ctx.send(
                     embed=embeds.error_embed(
                         title = "Not a URL!",
-                        description = "The argument given is not a URL, please make sure that it starts with either **https://** or **https://** for it to work properly."
+                        description = "The argument given is not a URL."
                     )
                 )
                 return
@@ -86,7 +99,7 @@ async def saucenao(ctx, src: typing.Optional[str]):
                 resultsPages.append(
                     embeds.results_embed(
                         database=f"[{result.index}]({result.url})",
-                        similarity=f"{result.similarity}%",
+                        similarity=result.similarity,
                         author=f"[{result.author_name}]({result.author_url})",
                         title=result.title,
                         thumbnail=result.thumbnail,
