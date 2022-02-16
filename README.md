@@ -1,5 +1,7 @@
 <img src="https://cdn.upload.systems/uploads/2LW1xcE7.png">
 
+### This discord bot is no longer getting maintained and will not be receiving any updates.
+
 # SauceBot
 A Discord bot that utilizes SauceNao API to find the source of anime image, you can invite the bot [here](https://top.gg/bot/923142964279115817).
 
