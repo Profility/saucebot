@@ -3,7 +3,9 @@
 ### This discord bot is no longer getting maintained and will not be receiving any updates.
 
 # SauceBot
-A Discord bot that utilizes SauceNao API to find the source of anime image, you can invite the bot [here](https://top.gg/bot/923142964279115817).
+A Discord bot that utilizes SauceNao API to find the source of anime image. 
+
+~You can invite the bot [here](https://top.gg/bot/923142964279115817).~ Bot is no longer getting hosted by me, please self-host it.
 
 ## Getting started
 
